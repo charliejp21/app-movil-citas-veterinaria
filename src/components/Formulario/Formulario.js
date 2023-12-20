@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, Modal, SafeAreaView, TextInput, View, ScrollView, Pressable, Alert} from 'react-native'
 import DatePicker from 'react-native-date-picker';
 import { styles } from './FormularioStyles'; 
@@ -8,6 +8,8 @@ import validateForm from './validateFormulario'
 const Formulario = (props) => {
 
     const [paciente, setPaciente] = useState('');
+
+    const [id, setId] = useState()
 
     const [propietario, setPropietario] = useState('')
 
@@ -19,7 +21,21 @@ const Formulario = (props) => {
 
     const [sintomas, setSintomas] = useState('')
  
-    const {modalVisible, setModalVisible, setPacientes, pacientes} = props;
+    const {modalVisible, setModalVisible, setPacientes, pacientes, paciente:pacienteObj} = props;
+
+    useEffect(()=> {
+
+        if(Object.keys(pacienteObj).length > 0){
+
+            setId(pacienteObj.id)
+            setPaciente(pacienteObj.paciente)
+            setPropietario(pacienteObj.propietario)
+            setEmail(pacienteObj.email)
+            setTelefeno(pacienteObj.tel)
+            setFecha(pacienteObj.fecha)
+            setSintomas(pacienteObj.sintomas)
+        }
+    }, [])
 
     const handleCita = () => {
 

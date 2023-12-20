@@ -15,6 +15,15 @@ const App = () => {
 
   const [modalVisible, setModalVisible] = useState(false)
   const [pacientes, setPacientes] = useState([])
+  const [paciente, setPaciente] = useState({})
+
+  const pacienteEdit = (id) =>{
+
+    const pacienteEdit = pacientes.filter(paciente => paciente.id === id)
+
+    setPaciente(pacienteEdit[0])
+
+  }
 
   return (
 
@@ -37,9 +46,14 @@ const App = () => {
         <FlatList 
          data={pacientes}
          keyExtractor={(item) => item.id}
-         renderItem={()=>{
+         renderItem={({item})=>{
 
-          return(<Paciente />)
+          return(
+              <Paciente 
+               item={item}
+               setModalVisible={setModalVisible}
+               pacienteEdit={pacienteEdit} />
+            )
           
          }}/>
       }
@@ -49,6 +63,7 @@ const App = () => {
         setModalVisible={setModalVisible}
         setPacientes={setPacientes}
         pacientes={pacientes}
+        paciente={paciente}
       />
 
     </SafeAreaView>   
