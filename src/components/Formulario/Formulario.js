@@ -9,7 +9,7 @@ const Formulario = (props) => {
 
     const [paciente, setPaciente] = useState('');
 
-    const [id, setId] = useState()
+    const [id, setId] = useState('')
 
     const [propietario, setPropietario] = useState('')
 
@@ -21,7 +21,7 @@ const Formulario = (props) => {
 
     const [sintomas, setSintomas] = useState('')
  
-    const {modalVisible, setModalVisible, setPacientes, pacientes, paciente:pacienteObj} = props;
+    const {modalVisible, setModalVisible, setPacientes, pacientes, paciente:pacienteObj, setPaciente: setPacienteApp} = props;
 
     useEffect(()=> {
 
@@ -31,31 +31,65 @@ const Formulario = (props) => {
             setPaciente(pacienteObj.paciente)
             setPropietario(pacienteObj.propietario)
             setEmail(pacienteObj.email)
-            setTelefeno(pacienteObj.tel)
+            setTel(pacienteObj.tel)
             setFecha(pacienteObj.fecha)
             setSintomas(pacienteObj.sintomas)
         }
-    }, [])
+        
+    }, [pacienteObj])
 
     const handleCita = () => {
+
+        const pacienteSave = {
+
+            paciente, 
+            propietario, 
+            email, 
+            tel, 
+            fecha, 
+            sintomas
+        
+        }
 
         try {
 
             validateForm(paciente, propietario, email, tel, fecha, sintomas)
 
-            const nuevoPaciente = {
-                                
-                id: Date.now(),
-                paciente, 
-                propietario, 
-                email, 
-                tel, 
-                fecha, 
-                sintomas
+            if(id){
+
+                pacienteSave.id = id
+
+                const pacientesActualizados = pacientes.map( pacienteState => pacienteState.id === pacienteSave.id ? pacienteSave : pacienteState)
+
+                setPacientes(pacientesActualizados)
+
+                setPacienteApp({})
+
+                Alert.alert(
+                    'Editada exitosamente',
+                    'Cita editada exitosamente', 
+                    [{text: 'Ok'}]
+                )
+                
+                setId('')
+                setPaciente('')
+                setPropietario('')
+                setEmail('')
+                setTel('')
+                setFecha(new Date())
+                setSintomas('')
+
+                return setModalVisible(!modalVisible)
+
+            }else{
+
+                pacienteSave.id = Date.now()
+
+                setPacientes([...pacientes, pacienteSave])
+
             }
 
-            setPacientes([...pacientes, nuevoPaciente])
-
+            setId('')
             setPaciente('')
             setPropietario('')
             setEmail('')
@@ -64,7 +98,7 @@ const Formulario = (props) => {
             setSintomas('')
 
             Alert.alert(
-                'Success',
+                'Cita creada',
                 'Cita creada exitosamente', 
                 [{text: 'Ok'}]
             )
@@ -95,13 +129,24 @@ const Formulario = (props) => {
 
             <ScrollView>
 
-            <Text style={styles.titulo}>Nueva {''} 
+            <Text style={styles.titulo}>{pacienteObj.id ? 'Editar' : 'Nueva'} {''} 
             <Text style={styles.tituloBold}>Cita</Text>
             </Text>
 
             <Pressable 
                 style={styles.btnCerrarModal}
-                onLongPress={() => setModalVisible(!modalVisible)}>
+                onLongPress={() => {
+                    setModalVisible(!modalVisible)
+                    setPacienteApp({})
+                    setId('')
+                    setPaciente('')
+                    setPropietario('')
+                    setEmail('')
+                    setTel('')
+                    setFecha(new Date())
+                    setSintomas('')
+                    }
+                }>
                 <Text style={styles.btnCerrarTextoModal}>X Cerrar</Text>
             </Pressable>
 
@@ -180,7 +225,7 @@ const Formulario = (props) => {
             <Pressable 
             style={styles.btbNuevaCita}
             onPress={handleCita}>
-                <Text style={styles.btbNuevaCitaTexto}>Agregar cita</Text>
+                <Text style={styles.btbNuevaCitaTexto}>{pacienteObj.id ? 'Editar' : 'Agregar'} cita</Text>
             </Pressable>
             
             </ScrollView>
