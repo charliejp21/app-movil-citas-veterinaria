@@ -70,7 +70,7 @@ const Formulario = (props) => {
                     'Cita editada exitosamente', 
                     [{text: 'Ok'}]
                 )
-                
+
                 setId('')
                 setPaciente('')
                 setPropietario('')
@@ -87,23 +87,23 @@ const Formulario = (props) => {
 
                 setPacientes([...pacientes, pacienteSave])
 
+                setId('')
+                setPaciente('')
+                setPropietario('')
+                setEmail('')
+                setTel('')
+                setFecha(new Date())
+                setSintomas('')
+
+                Alert.alert(
+                    'Cita creada',
+                    'Cita creada exitosamente', 
+                    [{text: 'Ok'}]
+                )
+
+                return setModalVisible(!modalVisible)
+
             }
-
-            setId('')
-            setPaciente('')
-            setPropietario('')
-            setEmail('')
-            setTel('')
-            setFecha(new Date())
-            setSintomas('')
-
-            Alert.alert(
-                'Cita creada',
-                'Cita creada exitosamente', 
-                [{text: 'Ok'}]
-            )
-
-            return setModalVisible(!modalVisible)
             
             
         } catch (error) {
