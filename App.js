@@ -3,7 +3,8 @@ import {
   SafeAreaView,
   Text,
   Pressable,
-  FlatList
+  FlatList, 
+  Alert
 } from 'react-native';
 
 import Formulario from './src/components/Formulario/Formulario';
@@ -23,6 +24,24 @@ const App = () => {
 
     setPaciente(pacienteEdit[0])
 
+  }
+
+  const pacienteDelete = (id) => {
+
+    Alert.alert(
+      '¿Estas seguro de eliminar esta cita?', 
+      'Una vez eliminada no será posible recuperar',
+      [
+        {text: 'Cancelar'}, 
+        {text: 'Sí, eliminar', onPress: () => {
+
+          const updatePacientes = pacientes.filter(paciente => paciente.id !== id)
+
+          setPacientes(updatePacientes)
+
+        }}
+      ]
+    )
   }
 
   return (
@@ -52,7 +71,8 @@ const App = () => {
               <Paciente 
                item={item}
                setModalVisible={setModalVisible}
-               pacienteEdit={pacienteEdit} />
+               pacienteEdit={pacienteEdit}
+               pacienteDelete={pacienteDelete} />
             )
           
          }}/>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, Pressable } from 'react-native'
 import { styles } from './PacienteStyles'; 
-export const Paciente = ({item, setModalVisible, pacienteEdit}) => {
+export const Paciente = ({item, setModalVisible, pacienteEdit, pacienteDelete}) => {
 
   const {paciente, fecha, id} = item
 
@@ -39,7 +39,9 @@ export const Paciente = ({item, setModalVisible, pacienteEdit}) => {
           <Text style={styles.btnTexto}>Editar</Text>
         </Pressable>
 
-        <Pressable style={[styles.btn, styles.btnEliminar]}>
+        <Pressable 
+          style={[styles.btn, styles.btnEliminar]}
+          onLongPress={() => pacienteDelete(id)}>
           <Text style={styles.btnTexto}>Eliminar</Text>
         </Pressable>
       </View>
