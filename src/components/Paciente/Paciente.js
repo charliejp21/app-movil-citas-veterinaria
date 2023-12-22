@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, Pressable } from 'react-native'
 import { styles } from './PacienteStyles'; 
-import { newFormateDate } from '../helpers/formatDate';
+import { newFormateDate } from '../../helpers/formatDate';
 export const Paciente = ({item, setModalVisible, pacienteEdit, pacienteDelete, setModalPaciente, setPaciente}) => {
 
   const {paciente, fecha, id} = item

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Pressable, SafeAreaView, Text, View } from 'react-native'
 import { styles } from './ModalPacienteStyles'; 
-import { newFormateDate } from '../helpers/formatDate';
+import { newFormateDate } from '../../helpers/formatDate';
 export const ModalPaciente = ({paciente, setModalPaciente, setPaciente}) => {
   return (
     <SafeAreaView style={styles.contenido}>
