@@ -1,29 +1,18 @@
 import React from 'react'
 import { Text, View, Pressable } from 'react-native'
 import { styles } from './PacienteStyles'; 
-export const Paciente = ({item, setModalVisible, pacienteEdit, pacienteDelete}) => {
+import { newFormateDate } from '../helpers/formatDate';
+export const Paciente = ({item, setModalVisible, pacienteEdit, pacienteDelete, setModalPaciente, setPaciente}) => {
 
   const {paciente, fecha, id} = item
 
-  const newFormateDate = (fecha) => {
-
-    const nuevaFecha = new Date(fecha)
-
-    const opciones = {
-
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    }
-
-    return nuevaFecha.toLocaleDateString('es-ES', opciones);
-
-  }
-
   return (
 
-    <View style={styles.contenedor}>
+    <Pressable
+     onLongPress={() => {
+      setModalPaciente(true)
+      setPaciente(item)}}>
+      <View style={styles.contenedor}>
       <Text style={styles.label}>Paciente:</Text>
       <Text style={styles.texto}>{paciente}</Text>
       <Text style={styles.fecha}>{newFormateDate(fecha)}</Text>
@@ -47,6 +36,9 @@ export const Paciente = ({item, setModalVisible, pacienteEdit, pacienteDelete}) 
       </View>
 
     </View>
+    </Pressable>
+
+    
   )
 
 }
