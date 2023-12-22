@@ -4,19 +4,22 @@ import {
   Text,
   Pressable,
   FlatList, 
-  Alert
+  Alert,
+  Modal
 } from 'react-native';
 
 import Formulario from './src/components/Formulario/Formulario';
 
 import { styles } from './AppStyles'; 
 import { Paciente } from './src/components/Paciente/Paciente';
+import { ModalPaciente } from './src/components/ModalPaciente/ModalPaciente';
 
 const App = () => {
 
   const [modalVisible, setModalVisible] = useState(false)
   const [pacientes, setPacientes] = useState([])
   const [paciente, setPaciente] = useState({})
+  const [modalPaciente, setModalPaciente] = useState(false)
 
   const pacienteEdit = (id) =>{
 
@@ -42,6 +45,12 @@ const App = () => {
         }}
       ]
     )
+  }
+
+  const cerrarModal = () => {
+
+    setModalVisible(false)
+
   }
 
   return (
@@ -72,20 +81,35 @@ const App = () => {
                item={item}
                setModalVisible={setModalVisible}
                pacienteEdit={pacienteEdit}
-               pacienteDelete={pacienteDelete} />
+               pacienteDelete={pacienteDelete}
+               setModalPaciente={setModalPaciente} 
+               setPaciente={setPaciente}/>
             )
           
          }}/>
       }
 
-      <Formulario 
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
+      {modalVisible && (
+
+        <Formulario 
+        cerrarModal={cerrarModal}
         setPacientes={setPacientes}
         pacientes={pacientes}
         paciente={paciente}
         setPaciente={setPaciente}
-      />
+        />
+
+      )}
+      
+      <Modal 
+       visible={modalPaciente}
+       animationType='fade'>
+
+        <ModalPaciente 
+         paciente={paciente}
+         setModalPaciente={setModalPaciente}
+         setPaciente={setPaciente} />
+      </Modal>
 
     </SafeAreaView>   
   )

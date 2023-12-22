@@ -21,7 +21,7 @@ const Formulario = (props) => {
 
     const [sintomas, setSintomas] = useState('')
  
-    const {modalVisible, setModalVisible, setPacientes, pacientes, paciente:pacienteObj, setPaciente: setPacienteApp} = props;
+    const {setPacientes, pacientes, paciente:pacienteObj, setPaciente: setPacienteApp, cerrarModal, modalVisible} = props;
 
     useEffect(()=> {
 
@@ -79,7 +79,7 @@ const Formulario = (props) => {
                 setFecha(new Date())
                 setSintomas('')
 
-                return setModalVisible(!modalVisible)
+                return cerrarModal()
 
             }else{
 
@@ -101,7 +101,7 @@ const Formulario = (props) => {
                     [{text: 'Ok'}]
                 )
 
-                return setModalVisible(!modalVisible)
+                return cerrarModal()
 
             }
             
@@ -136,7 +136,7 @@ const Formulario = (props) => {
             <Pressable 
                 style={styles.btnCerrarModal}
                 onLongPress={() => {
-                    setModalVisible(!modalVisible)
+                    cerrarModal()
                     setPacienteApp({})
                     setId('')
                     setPaciente('')
