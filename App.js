@@ -59,7 +59,7 @@ const App = () => {
 
       <Text style={styles.titulo}>Administrador de citas {''}
       
-        <Text style={styles.tituloBold}>veterniaria</Text>
+        <Text style={styles.tituloBold}>veterinaria</Text>
       
       </Text>
 
